@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Column from './Column';
-import ProjectModal from './ProjectModal'; // Import the modal
+import Column from '../components/Column';
+import ProjectModal from '../components/ProjectModal';
 import { getProjects } from '../api/projects';
 
 // The structure that defines our columns
@@ -12,14 +12,13 @@ const initialColumns = [
   { id: 'column-5', title: 'Finalizado' },
 ];
 
-const Dashboard = () => {
+const ProjectsPage = () => {
   const [projectsByStatus, setProjectsByStatus] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
 
   const fetchAndGroupProjects = async () => {
-    // ... (existing code)
     try {
       const response = await getProjects();
       const grouped = response.data.reduce((acc, project) => {
@@ -64,7 +63,8 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="flex space-x-6 overflow-x-auto p-6">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">Fluxo de Projetos (Kanban)</h1>
+      <div className="flex space-x-6 overflow-x-auto">
         {initialColumns.map(column => {
           const columnProjects = projectsByStatus[column.title] || [];
           return (
@@ -86,6 +86,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
-
-
+export default ProjectsPage;
